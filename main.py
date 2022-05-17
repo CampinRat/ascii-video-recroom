@@ -7,12 +7,13 @@ import pyperclip as pc
 from pynput.keyboard import Key, Controller
 from keyboard import press
 import mouse
+from pyautogui import *
 keyboardd = Controller()
 
 
 # HI change these to you mouse positon to where you paste in the data
-x = 1169
-y = 131
+x = 1143
+y = 142
 #################
 
 
@@ -21,7 +22,7 @@ y = 131
 
 def convert():
     # set vid to the video you want to convert  add .mp4 after(has to be in downloads)
-    vid = " "
+    vid = ".mp4"
 
 
 
@@ -75,7 +76,8 @@ def main(new_width=22):
             print("pee")
             time.sleep(3)
 
-
+            poop = 0
+            two = 1
         #while True:
             current = 0
             cur = str(current)
@@ -102,6 +104,7 @@ def main(new_width=22):
 
 
 
+            app = len(os.listdir(dir))
             for images in os.listdir(dir):
 
 
@@ -117,14 +120,37 @@ def main(new_width=22):
 
                     # format
                     pixel_count = len(new_image_data)
-                    ascii_image = "".join(
+                    join = "".join(
                         [new_image_data[index:(index + new_width)] for index in range(0, pixel_count, new_width)])
+                    ascii_image = join
 
 
                     res = ' '.join(ascii_image[i:i + 22] for i in range(0, len(ascii_image), 22))
                     #print(res)
+                    if current ==64:
+                        exit()
+                    if two == 1:
+                        pc.copy(res)
+                        mouse.click('left')
+                        time.sleep(0.4)
+                        mouse.move(x, y, absolute=True, duration=0)
 
-                    poop = 1
+                        mouse.click('left')
+
+                        time.sleep(0.3)
+                        keyboardd.press(Key.ctrl.value)
+                        keyboardd.press('v')
+                        keyboardd.release('v')
+                        keyboardd.release(Key.ctrl.value)
+
+                        time.sleep(0.1)
+                        press('enter')
+                        keyDown('esc')
+                        keyUp('esc')
+                        time.sleep(0.2)
+                        mouse.click('right')
+
+
                     if poop == 1:
                         pc.copy(res)
                         mouse.move(x, y, absolute=True, duration=0)
@@ -142,10 +168,10 @@ def main(new_width=22):
                         with open("ascii_image.txt", "w") as f:
                             f.write(res)
 
-                    print(current)
+                    print(current , "out of" , app)
                     current += 1
 
-                    time.sleep(2.3)
+                    time.sleep(0.5)
 
 
 
