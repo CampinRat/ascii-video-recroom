@@ -73,8 +73,8 @@ def main(new_width=22):
             current = 0
             dir = "C:\\Users\\tatea\PycharmProjects\\asciirecroom\\data"
             ASCII_CHARS = ["@", "#", "S", "%", "?", "*", "+", ";", ":", ",", "."]
-            print("pee")
-            time.sleep(3)
+            print("printing starts in 5 seconds!")
+            time.sleep(5)
 
             poop = 0
             two = 1
