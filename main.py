@@ -1,8 +1,6 @@
 import cv2
-import os
 import moviepy.editor as mp
 import PIL
-import time
 import pyperclip as pc
 from pynput.keyboard import Key, Controller
 from keyboard import press
@@ -15,21 +13,28 @@ keyboardd = Controller()
 x = 1143
 y = 142
 #################
-
+#set the delay for how fast you print (0.4 fastest)
+paste_delay = 0.3
+############
+#set how many frames to paste
+amount_to_paste = 70
 
 
 
 
 def convert():
     # set vid to the video you want to convert  add .mp4 after(has to be in downloads)
-    vid = ".mp4"
+    vid = "bad.mp4"
 
 
 
     clip = mp.VideoFileClip("C:\\Users\\tatea\\Downloads\\"+ vid)
-    clip_resized = clip.resize( (22,22) )
+    clip = clip.set_fps(2)
+    clip_resized = clip.resize( (32,32) )
     clip_resized.write_videofile("nw.mp4")
+
     vid = cv2.VideoCapture("nw.mp4")
+
 
     try:
 
@@ -69,7 +74,7 @@ def convert():
 
 #####
 
-def main(new_width=22):
+def main(new_width=32):
             current = 0
             dir = "C:\\Users\\tatea\PycharmProjects\\asciirecroom\\data"
             ASCII_CHARS = ["@", "#", "S", "%", "?", "*", "+", ";", ":", ",", "."]
@@ -82,7 +87,7 @@ def main(new_width=22):
             current = 0
             cur = str(current)
 
-            def resize_image(image, new_width=22):
+            def resize_image(image, new_width=32):
                 width, height = image.size
                 ratio = height / width
                 new_height = int(new_width * ratio)
@@ -125,12 +130,12 @@ def main(new_width=22):
                     ascii_image = join
 
 
-                    res = ' '.join(ascii_image[i:i + 22] for i in range(0, len(ascii_image), 22))
+                    res = ''.join(ascii_image[i:i + 32] for i in range(0, len(ascii_image), 32))
                     #print(res)
-                    if current ==64:
-                        exit()
+                    cop = res[:len(res)//2]
+                    cop1 = res[len(res) // 2:]
                     if two == 1:
-                        pc.copy(res)
+                        pc.copy(cop)
                         mouse.click('left')
                         time.sleep(0.4)
                         mouse.move(x, y, absolute=True, duration=0)
@@ -149,8 +154,39 @@ def main(new_width=22):
                         keyUp('esc')
                         time.sleep(0.2)
                         mouse.click('right')
+                        print(current, "out of", app)
+                        time.sleep(0.5)
+
+                        pc.copy(cop1)
+                        mouse.click('left')
+                        time.sleep(0.4)
+                        mouse.move(x, y, absolute=True, duration=0)
+
+                        mouse.click('left')
+
+                        time.sleep(0.3)
+                        keyboardd.press(Key.ctrl.value)
+                        keyboardd.press('v')
+                        keyboardd.release('v')
+                        keyboardd.release(Key.ctrl.value)
+
+                        time.sleep(0.1)
+                        press('enter')
+                        keyDown('esc')
+                        keyUp('esc')
+                        time.sleep(0.2)
+                        mouse.click('right')
+                        print(current, "out of", app)
+                        time.sleep(paste_delay)
 
 
+
+
+
+
+
+                        if current == amount_to_paste:
+                            exit()
                     if poop == 1:
                         pc.copy(res)
                         mouse.move(x, y, absolute=True, duration=0)
@@ -168,10 +204,10 @@ def main(new_width=22):
                         with open("ascii_image.txt", "w") as f:
                             f.write(res)
 
-                    print(current , "out of" , app)
+
                     current += 1
 
-                    time.sleep(0.5)
+
 
 
 
